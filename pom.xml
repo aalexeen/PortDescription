@@ -12,7 +12,8 @@
 
     <properties>
     <postgresql.version>9.4.1212.jre7</postgresql.version>
-        <slf4j.version>1.7.25</slf4j.version>
+        <slf4j-api.version>1.7.25</slf4j-api.version>
+        <slf4j-simple.version>1.7.25</slf4j-simple.version>
         <log4j-api.version>2.7</log4j-api.version>
         <log4j-core.version>2.7</log4j-core.version>
         <log4j-slf4j-impl>2.7</log4j-slf4j-impl>
@@ -25,11 +26,16 @@
             <version>${postgresql.version}</version>
         </dependency>
 
-        <!--<dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>-->
+            <version>${slf4j-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j-simple.version}</version>
+        </dependency>
 
         <!--Log4j2 https://www.baeldung.com/slf4j-with-log4j2-logback-->
         <dependency>
@@ -42,11 +48,11 @@
             <artifactId>log4j-core</artifactId>
             <version>LATEST</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>LATEST</version>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
     <build>

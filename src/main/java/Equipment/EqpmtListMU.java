@@ -3,6 +3,8 @@ package Equipment;
 import Equipment.Service.EquipmentListingA;
 import EquipmentDetail.EqpmtCurrent;
 import EquipmentDetail.Service.Eqpmt;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import simpleDB.GetFromDB;
 import snmp.SNMPManager1;
 
@@ -131,8 +133,12 @@ public class EqpmtListMU extends EquipmentListingA {
     public static void main(String[] args) {
 
         EqpmtListMU eqmptList = new EqpmtListMU("MU");
+        Logger logger = LoggerFactory.getLogger(EqpmtListMU.class);
 
+        // https://www.slf4j.org/faq.html#logging_performance
+        logger.info("getIpList {}", eqmptList.getIpList());
         System.out.println(eqmptList.getIpList());
+        logger.info("test");
         System.out.println(eqmptList.getIpWithPorts());
     }
 
