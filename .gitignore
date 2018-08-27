@@ -1,0 +1,9 @@
+src/main/java/simpleDB/PostDB.java
+.idea/*
+.editorconfig
+PortDescription.iml
+/target/*
+.git/*
+/src/main/java/simpleDB/*
+src/main/java/snmp/*
+src/main/java/test/*
