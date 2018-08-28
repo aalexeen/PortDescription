@@ -137,9 +137,9 @@ public class EqpmtListMU extends EquipmentListingA {
 
         // https://www.slf4j.org/faq.html#logging_performance
         logger.info("getIpList {}", eqmptList.getIpList());
-        System.out.println(eqmptList.getIpList());
-        logger.info("test");
-        System.out.println(eqmptList.getIpWithPorts());
+        //System.out.println(eqmptList.getIpList());
+        logger.debug("test");
+        //System.out.println(eqmptList.getIpWithPorts());
     }
 
 }
