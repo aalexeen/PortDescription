@@ -5,6 +5,7 @@ import EquipmentDetail.EqpmtCurrent;
 import EquipmentDetail.Service.Eqpmt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.profiler.Profiler;
 import simpleDB.GetFromDB;
 import snmp.SNMPManager1;
 
@@ -134,12 +135,20 @@ public class EqpmtListMU extends EquipmentListingA {
 
         EqpmtListMU eqmptList = new EqpmtListMU("MU");
         Logger logger = LoggerFactory.getLogger(EqpmtListMU.class);
+        Profiler profiler = new Profiler("ListMU");
 
         // https://www.slf4j.org/faq.html#logging_performance
+        profiler.start("Start");
         logger.info("getIpList {}", eqmptList.getIpList());
         //System.out.println(eqmptList.getIpList());
+        profiler.start("step 1");
         logger.debug("test");
         //System.out.println(eqmptList.getIpWithPorts());
+        logger.info("getIpWithPorts {}", eqmptList.getIpWithPorts());
+
+        profiler.start("The end");
+
+        profiler.stop().print();
     }
 
 }
