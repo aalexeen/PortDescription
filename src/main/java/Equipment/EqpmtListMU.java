@@ -25,6 +25,8 @@ public class EqpmtListMU extends EquipmentListingA {
     // String - ip switch, Eqpmt = current Equipment object
     private HashMap<String, Eqpmt> ipWithPorts = new HashMap<String, Eqpmt>();
 
+    private Logger logger = LoggerFactory.getLogger(EqpmtListMU.class);
+
     public EqpmtListMU() {
         //getDB = new GetFromDB();
         //snmp = new SNMPManager1();
@@ -123,7 +125,7 @@ public class EqpmtListMU extends EquipmentListingA {
     private HashMap<Integer, String> setToMap(Set<List> switchesSet) {
         HashMap<Integer, String> result = new HashMap<>();
         for (List switches : switchesSet) {
-            System.out.println("id_switch = " + switches.get(0) + "  ip_switch = " + switches.get(1));
+            logger.debug("id switch = {} ip_switch = {}", switches.get(0), switches.get(1));
             result.put(Integer.valueOf(switches.get(0).toString()), switches.get(1).toString());
         }
         return result;
@@ -140,13 +142,11 @@ public class EqpmtListMU extends EquipmentListingA {
         // https://www.slf4j.org/faq.html#logging_performance
         profiler.start("Start");
         logger.info("getIpList {}", eqmptList.getIpList());
-        //System.out.println(eqmptList.getIpList());
         profiler.start("step 1");
         logger.debug("test");
-        //System.out.println(eqmptList.getIpWithPorts());
         logger.info("getIpWithPorts {}", eqmptList.getIpWithPorts());
 
-        profiler.start("The end");
+        //profiler.start("The end");
 
         profiler.stop().print();
     }
