@@ -69,7 +69,7 @@ public class ModelsTable {
         switch(groupNumber) {
             case 1: return "CORE";
             case 2: return "BRAS";
-            case 3: return "[MU]";
+            case 3: return "[MBH]";
             case 4: return "";
             case 5: return "[DU]";
             case 6: return "[MN_SBE]_UPS";

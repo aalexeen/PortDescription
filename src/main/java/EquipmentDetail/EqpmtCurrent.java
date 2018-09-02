@@ -56,9 +56,10 @@ public class EqpmtCurrent extends EqpmtA {
     private void makePortList() {
         Set<List> linksFromDB = new HashSet<List>();
         // Get Connections list of current switch
-        String sqlRequestIdLinksByIdEqpmt = "select * from ports where id_sw = " + idEqpmt + " and id_conn != 0;";
+        String sqlRequestIdLinksByIdEqpmt = "select * from ports where id_sw = " + idEqpmt + ";";
         // 1 - id_link, 5 - id_conn(main), 8 - ifname (GigabitEthernet3/0/21)
         linksFromDB = getDB.selectExecute(sqlRequestIdLinksByIdEqpmt, 1, 5, 8);
+        logger.debug("linkFromDB {}", linksFromDB);
         if (!linksFromDB.isEmpty()) {
             logger.debug("Port links from DB (id_link, id_conn, ifname) {}", linksFromDB );
             /*for (List <List> e :linksFromDB) {
@@ -68,14 +69,22 @@ public class EqpmtCurrent extends EqpmtA {
             //Get the id_switch according to id_conn by the id_links
             while (idLinks.hasNext()) {
                 List<Object> idLinkCurrent = idLinks.next();
-
-                Port portCurrent = new PortCurrent(Integer.valueOf(idLinkCurrent.get(1).toString()));
-                //Put the ifname(key) and portCurrent(value) to the hashmap portsDescr
-                logger.debug("id_link={}; id_conn={}; ifname={}; portCurrent={}; ", idLinkCurrent.get(0), idLinkCurrent.get(1), idLinkCurrent.get(2), portCurrent.getPortDescription());
-                //portsList.put(Integer.valueOf(temp.get(0).toString()), portCurrent);
-                //Put into the hashmap IFNAME and object PortCurrent
-                portsDescr.put(idLinkCurrent.get(2).toString(), portCurrent);
-
+                logger.debug("idLinkCurrent {}", idLinkCurrent);
+                String idLink = idLinkCurrent.get(1).toString();
+                String idConn = idLinkCurrent.get(1).toString();
+                String  ifname = idLinkCurrent.get(2).toString();
+                if(idLink != "") {
+                    Port portCurrent = new PortCurrent(Integer.valueOf(idLink));
+                    //Put the ifname(key) and portCurrent(value) to the hashmap portsDescr
+                    logger.debug("id_link={}; id_conn={}; ifname={}; portCurrent={}; ", idLink, idConn, ifname, portCurrent.getPortDescription());
+                    //portsList.put(Integer.valueOf(temp.get(0).toString()), portCurrent);
+                    //Put into the hashmap IFNAME and object PortCurrent
+                    portsDescr.put(ifname, portCurrent);
+                } else {
+                    Port portCurrent = new PortCurrent();
+                    logger.debug("id_link={}; id_conn={}; ifname={}; portCurrent={}; ", idLink, idConn, ifname, portCurrent.getPortDescription());
+                    portsDescr.put(ifname, portCurrent);
+                }
 
             }
 

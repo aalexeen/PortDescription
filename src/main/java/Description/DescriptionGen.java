@@ -54,10 +54,10 @@ public class DescriptionGen extends DescriptionA {
     }
 
     private void  makeDescription() {
-        if (!prefix.equals("MU")) {
+        if (!prefix.equals("[MBH]")) {
             description = getThePrefix() + "_" + eqpmtInfo.get(1) + "-" + eqpmtInfo.get(2) + "" + getTheDrob() + "-L2";
         } else {
-            description = getThePrefix() + "_" + makeSysInfo();
+            description = getThePrefix() + "_" + makeSysInfo()+ "_" + eqpmtInfo.get(1) + "-" + eqpmtInfo.get(2) + "" + getTheDrob();
         }
 
 

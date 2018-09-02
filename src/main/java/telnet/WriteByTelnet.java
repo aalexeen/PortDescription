@@ -3,26 +3,35 @@ package telnet;
 import Equipment.Service.EquipmentListing;
 import EquipmentDetail.Service.Eqpmt;
 import Port.Service.Port;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.text.html.parser.Entity;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * @author alex_jd
  */
 public class WriteByTelnet {
 
-    String server = null;
-    String user = null;
-    String password = null;
+    private String login = null;
+    private String password = null;
 
-    String groupEquipmentName;
+    private String groupEquipmentName;
     //AutomatedTelnetClient telnet;
+    //private HashMap<String, Eqpmt> eqmptList = new HashMap<String, Eqpmt>();
+
+    private Logger logger = LoggerFactory.getLogger(WriteByTelnet.class);
 
     public WriteByTelnet(String groupEquipmentName, EquipmentListing eqmptList) {
         this.groupEquipmentName = groupEquipmentName;
         //setEnviroment();
-        //setTelnet();
+        //this.eqmptList = eqmptList;
+        setProperties();
         writeDescription(eqmptList);
     }
 
@@ -42,8 +51,6 @@ public class WriteByTelnet {
 
     private void writeDescription(EquipmentListing eqmptList) {
         if (groupEquipmentName.equals("MU")) {
-            this.user = "test";
-            this.password = "test";
             // Firs cycle - Get the list of equipments by Entry
             for(Map.Entry<String, Eqpmt> entryList : eqmptList.getIpWithPorts().entrySet()) {
                 // Get the telnet access using IP address
@@ -55,25 +62,27 @@ public class WriteByTelnet {
                     // Second cycle - Get the ifname and its description
                     for (Map.Entry<String, Port> entryEqpmp : eqpmt.getPortsDescr().entrySet() ) {
                         //Get the IFNAME and go to the interface
-                        telnet.write("int " + entryEqpmp.getValue());
-                        telnet.readUntil("]");
+                        String ifname = entryEqpmp.getValue().getPortDescription();
+                        logger.debug("ifname {}", ifname);
+                        //telnet.write("int " + ifname);
+                        //telnet.readUntil("]");
                         // Set Description on the switch
-                        telnet.write("descrip " + entryEqpmp.getValue().getPortDescription());
-                        telnet.readUntil("]");
+                        String description = entryEqpmp.getValue().getPortDescription();
+                        logger.debug("description {}", description);
+                        //telnet.write("descrip " + description);
+                        //telnet.readUntil("]");
                     }
                 } else {
-                    System.out.println("Can't connect to the ip " + entryList.getKey());
+                    logger.debug("Error: Can't connect to the IP {}", entryList.getKey());
                 }
                 telnet.disconnect();
             }
 
         } else if (groupEquipmentName.equals("DU")) {
-            this.user = "test";
-            this.password = "test";
+
 
         } else if (groupEquipmentName.equals("OPT")) {
-            this.user = "test";
-            this.password = "test";
+
 
         } else {
 
@@ -83,11 +92,33 @@ public class WriteByTelnet {
     private AutomatedTelnetClient setTelnet(String ipAddress) {
         AutomatedTelnetClient telnet = null;
         try {
-            telnet = new AutomatedTelnetClient(ipAddress, user,	password);
+            telnet = new AutomatedTelnetClient(ipAddress, login, password);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return telnet;
+    }
+
+    private void setProperties() {
+        final FileInputStream config;
+        final Properties properties = new Properties();
+
+        try {
+            config = new FileInputStream("src/main/resources/telnet.properties");
+            properties.load(config);
+
+            if (groupEquipmentName.equals("MU")) {
+                login = properties.getProperty("telnet.mu.login");
+                password = properties.getProperty("telnet.mu.password");
+            } else if (groupEquipmentName.equals("DU")) {
+                login = properties.getProperty("telnet.du.login");
+                password = properties.getProperty("telnet.du.password");
+            }
+
+
+        } catch (IOException e) {
+            logger.error("Error: properties file telnet.properties is absent {}", e);
+        }
     }
 
 }

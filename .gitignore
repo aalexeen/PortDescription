@@ -7,3 +7,5 @@ PortDescription.iml
 /src/main/java/simpleDB/*
 src/main/java/snmp/*
 src/main/java/test/*
+src/main/resources/postDB.properties
+src/main/resources/telnet.properties

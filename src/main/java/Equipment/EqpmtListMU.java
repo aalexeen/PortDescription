@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.profiler.Profiler;
 import simpleDB.GetFromDB;
 import snmp.SNMPManager1;
+import telnet.WriteByTelnet;
 
 import java.util.*;
 
@@ -19,7 +20,7 @@ public class EqpmtListMU extends EquipmentListingA {
     private String groupEquipmentName;
 
     // Integer - id_switch, String - ip_switch
-    private HashMap<Integer, String> ipList = new HashMap<>();
+    private HashMap<Integer, String> ipList = new HashMap<Integer, String>();
     // Integer - id_switch, Eqpmt - current Equipment object
     private HashMap<Integer, Eqpmt> equipments = new HashMap<Integer, Eqpmt>();
     // String - ip switch, Eqpmt = current Equipment object
@@ -73,6 +74,8 @@ public class EqpmtListMU extends EquipmentListingA {
             Eqpmt eqpmtCurrent = new EqpmtCurrent(idSwitch);
             equipments.put(idSwitch, eqpmtCurrent);
         }*/
+        ipList = new HashMap<Integer, String>();
+        ipList.put(5126, "10.110.5.160");
 
         for (Map.Entry<Integer, String> entry : ipList.entrySet()) {
             Integer idSwitch = entry.getKey();
@@ -104,7 +107,7 @@ public class EqpmtListMU extends EquipmentListingA {
         Set<List> equipFromDB = new HashSet<List>();
 
         if(groupEquipmentName.equals("MU")) {
-            String sqlRequest = "select id_switch, ip from switch where (id_model = '65' or id_model = '85' or id_model = '90') and ip != '10.110.5.160';";
+            String sqlRequest = "select id_switch, ip from switch where id_model = '65' or id_model = '85' or id_model = '90';";
 
             // 1 - id_switch, 2 - ip_switch
             equipFromDB = getDB.selectExecute(sqlRequest, 1, 2);
@@ -147,6 +150,7 @@ public class EqpmtListMU extends EquipmentListingA {
         logger.info("getIpWithPorts {}", eqmptList.getIpWithPorts());
 
         //profiler.start("The end");
+        WriteByTelnet telnet = new WriteByTelnet("MU", eqmptList);
 
         profiler.stop().print();
     }
