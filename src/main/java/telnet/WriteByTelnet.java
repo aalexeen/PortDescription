@@ -6,10 +6,8 @@ import Port.Service.Port;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.text.html.parser.Entity;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -60,17 +58,30 @@ public class WriteByTelnet {
                     telnet.readUntil("]");
                     Eqpmt eqpmt = entryList.getValue();
                     // Second cycle - Get the ifname and its description
-                    for (Map.Entry<String, Port> entryEqpmp : eqpmt.getPortsDescr().entrySet() ) {
-                        //Get the IFNAME and go to the interface
-                        String ifname = entryEqpmp.getValue().getPortDescription();
-                        logger.debug("ifname {}", ifname);
-                        //telnet.write("int " + ifname);
-                        //telnet.readUntil("]");
-                        // Set Description on the switch
-                        String description = entryEqpmp.getValue().getPortDescription();
-                        logger.debug("description {}", description);
-                        //telnet.write("descrip " + description);
-                        //telnet.readUntil("]");
+                    try {
+                        for (Map.Entry<String, Port> entryEqpmp : eqpmt.getPortsDescr().entrySet() ) {
+                            //Get the IFNAME and go to the interface
+                            String ifname = entryEqpmp.getKey();
+                            logger.debug("ifname {}", ifname);
+                            telnet.write("int " + ifname);
+                            telnet.readUntil("]");
+                            Thread.sleep(500);
+                            // Set Description on the switch
+                            String description = entryEqpmp.getValue().getPortDescription();
+                            if (!description.equals("")) {
+                                logger.debug("description {}", description);
+                                telnet.write("description " + description);
+                                telnet.readUntil("]");
+                                Thread.sleep(500);
+                            } else {
+                                logger.debug("undo description {}", description);
+                                telnet.write("undo description ");
+                                telnet.readUntil("]");
+                                Thread.sleep(500);
+                            }
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 } else {
                     logger.debug("Error: Can't connect to the IP {}", entryList.getKey());

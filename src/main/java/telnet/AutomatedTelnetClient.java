@@ -4,6 +4,8 @@
 package telnet;
 
 import org.apache.commons.net.telnet.TelnetClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -17,6 +19,8 @@ public class AutomatedTelnetClient {
 	private InputStream in;
 	private PrintStream out;
 	private String prompt = ">";
+
+	private Logger logger = LoggerFactory.getLogger(AutomatedTelnetClient.class);
 
 	public AutomatedTelnetClient(String server, String user, String password) {
 		try {
@@ -96,7 +100,9 @@ public class AutomatedTelnetClient {
 
 	public void disconnect() {
 		try {
+			logger.info("Try to disconnect telnet connection. Current telnet status is {}", telnet.isConnected());
 			telnet.disconnect();
+			logger.info("Telnet status (false - disconnect) {}", telnet.isConnected());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
