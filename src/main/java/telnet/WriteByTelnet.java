@@ -69,16 +69,15 @@ public class WriteByTelnet {
                             // Set Description on the switch
                             String description = entryEqpmp.getValue().getPortDescription();
                             if (!description.equals("")) {
-                                logger.debug("description {}", description);
-                                telnet.write("description " + description);
-                                telnet.readUntil("]");
-                                Thread.sleep(500);
+                                description = "description " + description;
+
                             } else {
-                                logger.debug("undo description {}", description);
-                                telnet.write("undo description ");
-                                telnet.readUntil("]");
-                                Thread.sleep(500);
+                                description = "undo description";
                             }
+                            logger.debug("description {}", description);
+                            telnet.write(description);
+                            telnet.readUntil("]");
+                            Thread.sleep(500);
                         }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
