@@ -10,9 +10,5 @@ import java.util.List;
  */
 public abstract class DescriptionA implements Description, StatConPostDB  {
 
-    public HashSet<List> modelNumbers = null;
 
-    /*public static void setModelNumbers() {
-
-    }*/
 }

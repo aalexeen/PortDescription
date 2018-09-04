@@ -14,7 +14,7 @@ import java.util.List;
 public class PortCurrent extends PortA {
 
     private Integer idLink = null;
-    private String description = null;
+    private String description;
 
     private Logger logger = LoggerFactory.getLogger(PortCurrent.class);
 
