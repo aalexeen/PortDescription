@@ -19,14 +19,10 @@ public class PortCurrent extends PortA {
     private Logger logger = LoggerFactory.getLogger(PortCurrent.class);
 
     public PortCurrent() {
-        //getDB = new GetFromDB();
-        //snmp = new SNMPManager1();
         makeDescription("empty");
     }
 
     public PortCurrent(Integer idLink) {
-        //getDB = new GetFromDB();
-        //snmp = new SNMPManager1();
         this.idLink = idLink;
         makeDescription();
     }
@@ -41,7 +37,6 @@ public class PortCurrent extends PortA {
     }
 
     private void makeDescription() {
-        HashSet<List> idSwitchFromDB = new HashSet<List>();
         String sqlRequestSwByIdConn = "select * from ports where id = " + idLink + ";";
         // 1 - id_conn, 2 - id_switch(main)
         HashSet<List> idSwitches = getDB.selectExecute(sqlRequestSwByIdConn, 1, 2);

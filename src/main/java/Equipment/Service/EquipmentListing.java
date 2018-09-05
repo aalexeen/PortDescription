@@ -13,4 +13,5 @@ public interface EquipmentListing {
 
     public HashMap<Integer, String> getIpList();
     public HashMap<String, Eqpmt> getIpWithPorts();
+    public HashMap<Integer, Eqpmt> getEquipments();
 }

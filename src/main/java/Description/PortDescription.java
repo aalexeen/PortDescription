@@ -14,13 +14,9 @@ public class PortDescription extends DescriptionA {
 
 
     public PortDescription() {
-        //getDB = new GetFromDB();
-        //snmp = new SNMPManager1();
     }
 
     public PortDescription(Integer idSwitch) {
-        //getDB = new GetFromDB();
-        //snmp = new SNMPManager1();
         this.idSwitch = idSwitch;
         makeDescription();
 

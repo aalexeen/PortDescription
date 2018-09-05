@@ -29,16 +29,12 @@ public class EqpmtListMU extends EquipmentListingA {
     private Logger logger = LoggerFactory.getLogger(EqpmtListMU.class);
 
     public EqpmtListMU() {
-        //getDB = new GetFromDB();
-        //snmp = new SNMPManager1();
         this.groupEquipmentName = "MU";
         setIpList();
         setEquipments();
     }
 
     public EqpmtListMU(String groupEquipmentName) {
-        //getDB = new GetFromDB();
-        //snmp = new SNMPManager1();
         this.groupEquipmentName = groupEquipmentName;
         setIpList();
         setEquipments();
@@ -67,15 +63,10 @@ public class EqpmtListMU extends EquipmentListingA {
 
 
     public void setEquipments() {
-        /*Iterator<Integer> idEqpmt = ipList.keySet().iterator();
-        while(idEqpmt.hasNext()) {
-            Integer idSwitch = idEqpmt.next();
-            // Create the EqpmtCurrent object with id_switch parameter
-            Eqpmt eqpmtCurrent = new EqpmtCurrent(idSwitch);
-            equipments.put(idSwitch, eqpmtCurrent);
-        }*/
+        // temp for test--start
         ipList = new HashMap<Integer, String>();
         ipList.put(5126, "10.110.5.160");
+        // temp for test--finish
 
         for (Map.Entry<Integer, String> entry : ipList.entrySet()) {
             Integer idSwitch = entry.getKey();

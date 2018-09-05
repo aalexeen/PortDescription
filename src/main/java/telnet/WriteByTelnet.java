@@ -20,32 +20,14 @@ public class WriteByTelnet {
     private String password = null;
 
     private String groupEquipmentName;
-    //AutomatedTelnetClient telnet;
-    //private HashMap<String, Eqpmt> eqmptList = new HashMap<String, Eqpmt>();
 
     private Logger logger = LoggerFactory.getLogger(WriteByTelnet.class);
 
     public WriteByTelnet(String groupEquipmentName, EquipmentListing eqmptList) {
         this.groupEquipmentName = groupEquipmentName;
-        //setEnviroment();
-        //this.eqmptList = eqmptList;
         setProperties();
         writeDescription(eqmptList);
     }
-
-    /*private void setEnviroment() {
-        if (groupEquipmentName.equals("MU")) {
-            this.user = "test";
-            this.password = "test";
-
-        } else if (groupEquipmentName.equals("DU")) {
-
-        } else if (groupEquipmentName.equals("OPT")) {
-
-        } else {
-
-        }
-    }*/
 
     private void writeDescription(EquipmentListing eqmptList) {
         if (groupEquipmentName.equals("MU")) {
@@ -82,6 +64,12 @@ public class WriteByTelnet {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    telnet.write("\u001A");
+                    telnet.readUntil(">");
+                    telnet.write("save");
+                    telnet.readUntil("]");
+                    telnet.write("y");
+                    telnet.readUntil(">");
                 } else {
                     logger.debug("Error: Can't connect to the IP {}", entryList.getKey());
                 }
