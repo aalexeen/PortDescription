@@ -6,8 +6,6 @@ import EquipmentDetail.Service.Eqpmt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.profiler.Profiler;
-import simpleDB.GetFromDB;
-import snmp.SNMPManager1;
 import telnet.WriteByTelnet;
 
 import java.util.*;
