@@ -3,6 +3,7 @@ package Equipment;
 import Equipment.Service.EquipmentListingA;
 import EquipmentDetail.EqpmtCurrent;
 import EquipmentDetail.Service.Eqpmt;
+import Pattern.InteractDB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.profiler.Profiler;
@@ -96,10 +97,11 @@ public class EqpmtListMU extends EquipmentListingA {
         Set<List> equipFromDB = new HashSet<List>();
 
         if(groupEquipmentName.equals("MU")) {
-            String sqlRequest = "select id_switch, ip from switch where id_model = '65' or id_model = '85' or id_model = '90';";
+            //String sqlRequest = "select id_switch, ip from switch where id_model = '65' or id_model = '85' or id_model = '90';";
 
             // 1 - id_switch, 2 - ip_switch
-            equipFromDB = getDB.selectExecute(sqlRequest, 1, 2);
+            //equipFromDB = getDB.selectExecute(sqlRequest, 1, 2);
+            equipFromDB = InteractDB.getFromDB("ListOfMU");
 
         } else if (groupEquipmentName.equals("DU")) {
 
@@ -126,6 +128,8 @@ public class EqpmtListMU extends EquipmentListingA {
 
 
     public static void main(String[] args) {
+
+        InteractDB interactDB = new InteractDB("PostgreSQL");
 
         EqpmtListMU eqmptList = new EqpmtListMU("MU");
         Logger logger = LoggerFactory.getLogger(EqpmtListMU.class);
