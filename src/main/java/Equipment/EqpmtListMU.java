@@ -7,7 +7,6 @@ import Pattern.InteractDB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.profiler.Profiler;
-import telnet.WriteByTelnet;
 
 import java.util.*;
 
@@ -97,10 +96,7 @@ public class EqpmtListMU extends EquipmentListingA {
         Set<List> equipFromDB = new HashSet<List>();
 
         if(groupEquipmentName.equals("MU")) {
-            //String sqlRequest = "select id_switch, ip from switch where id_model = '65' or id_model = '85' or id_model = '90';";
-
             // 1 - id_switch, 2 - ip_switch
-            //equipFromDB = getDB.selectExecute(sqlRequest, 1, 2);
             equipFromDB = InteractDB.getFromDB("ListOfMU");
 
         } else if (groupEquipmentName.equals("DU")) {

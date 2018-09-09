@@ -52,9 +52,7 @@ public class EqpmtCurrent extends EqpmtA {
 
     private void makePortList() {
         // Get Connections list of current switch
-        //String sqlRequestIdLinksByIdEqpmt = "select * from ports where id_sw = " + idEqpmt + ";";
         // 1 - id_link, 5 - id_conn(main), 8 - ifname (GigabitEthernet3/0/21)
-        //Set<List> linksFromDB = getDB.selectExecute(sqlRequestIdLinksByIdEqpmt, 1, 5, 8);
         Set<List> linksFromDB = InteractDB.getFromDB("ListOfPorts", idEqpmt.toString());
         logger.debug("linksFromDB {}", linksFromDB);
         if (!linksFromDB.isEmpty()) {

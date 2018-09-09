@@ -38,9 +38,7 @@ public class PortCurrent extends PortA {
     }
 
     private void makeDescription() {
-        //String sqlRequestSwByIdConn = "select * from ports where id = " + idLink + ";";
         // 1 - id_conn, 2 - id_switch(main)
-        //Set<List> idSwitches = getDB.selectExecute(sqlRequestSwByIdConn, 1, 2);
         Set<List> idSwitches = InteractDB.getFromDB("SwitchByIdConn", idLink.toString());
         logger.debug("idSwitches {}", idSwitches);
         // Get id_switch from List
