@@ -33,7 +33,6 @@ public class PortDescription extends DescriptionA {
 
     private void makeDescription() {
         // 1 - id_model, 2 - street name (translit), 3 - home number, 4 - home subnumber, 5 - model name, 6 - switch ip
-        //List switchInfo = getDB.getTheList(getDB.selectExecute(sqlRequestSwitchInfo, 1, 2, 3, 4, 6));
         List switchInfo = InteractDB.getTheList(InteractDB.getFromDB("SwitchInfo", idSwitch.toString()));
 
         DescriptionGen descr = new DescriptionGen(switchInfo);
