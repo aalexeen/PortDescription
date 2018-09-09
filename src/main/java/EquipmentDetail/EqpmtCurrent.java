@@ -1,6 +1,7 @@
 package EquipmentDetail;
 
 import EquipmentDetail.Service.EqpmtA;
+import Pattern.InteractDB;
 import Port.Service.Port;
 import Port.PortCurrent;
 import org.slf4j.Logger;
@@ -51,10 +52,11 @@ public class EqpmtCurrent extends EqpmtA {
 
     private void makePortList() {
         // Get Connections list of current switch
-        String sqlRequestIdLinksByIdEqpmt = "select * from ports where id_sw = " + idEqpmt + ";";
+        //String sqlRequestIdLinksByIdEqpmt = "select * from ports where id_sw = " + idEqpmt + ";";
         // 1 - id_link, 5 - id_conn(main), 8 - ifname (GigabitEthernet3/0/21)
-        Set<List> linksFromDB = getDB.selectExecute(sqlRequestIdLinksByIdEqpmt, 1, 5, 8);
-        logger.debug("linkFromDB {}", linksFromDB);
+        //Set<List> linksFromDB = getDB.selectExecute(sqlRequestIdLinksByIdEqpmt, 1, 5, 8);
+        Set<List> linksFromDB = InteractDB.getFromDB("ListOfPorts", idEqpmt.toString());
+        logger.debug("linksFromDB {}", linksFromDB);
         if (!linksFromDB.isEmpty()) {
             logger.debug("Port links from DB (id_link, id_conn, ifname) {}", linksFromDB );
 

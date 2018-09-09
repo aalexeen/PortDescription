@@ -139,11 +139,11 @@ public class EqpmtListMU extends EquipmentListingA {
         profiler.start("Start");
         logger.info("getIpList {}", eqmptList.getIpList());
         profiler.start("step 1");
-        logger.debug("test");
+        //logger.debug("test");
         logger.info("getIpWithPorts {}", eqmptList.getIpWithPorts());
 
         //profiler.start("The end");
-        WriteByTelnet telnet = new WriteByTelnet("MU", eqmptList);
+        //WriteByTelnet telnet = new WriteByTelnet("MU", eqmptList);
 
         profiler.stop().print();
     }

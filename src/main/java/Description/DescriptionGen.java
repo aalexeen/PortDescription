@@ -1,6 +1,7 @@
 package Description;
 
 import Description.Service.DescriptionA;
+import Pattern.InteractSNMP;
 
 import java.util.*;
 
@@ -65,21 +66,7 @@ public class DescriptionGen extends DescriptionA {
     }
 
     private String makeSysInfo() {
-        String sysInfo = null;
-        try {
-            snmp.start();
-            sysInfo = snmp.get(eqpmtInfo.get(4).toString(), "1.3.6.1.2.1.1.5.0");
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                snmp.stop();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }
-        return sysInfo;
+        return InteractSNMP.getSNMP(eqpmtInfo.get(4).toString(), "SysInfo");
     }
 
 

@@ -1,8 +1,6 @@
 package Description;
 
-import simpleDB.GetFromDB;
-import snmp.SNMPManager1;
-
+import Pattern.InteractDB;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,34 +13,18 @@ import java.util.Set;
 public class ModelsTable {
     public static Map<Integer, Set> models = new HashMap<>();
 
-    public static GetFromDB getDB;
-    public static SNMPManager1 snmp;
-
     static {
-        getDB = new GetFromDB();
-        snmp = new SNMPManager1();
-
         String sqlRequestMaxPurpose = "select max(purpose) from model;" ;
         // Get the max of purpose and convert into integer.
-        Integer maxPurpose = Integer.valueOf(getDB.getTheList(getDB.selectExecute(sqlRequestMaxPurpose, 1)).iterator().next().toString());
+        Integer maxPurpose = Integer.valueOf(InteractDB.getTheList(InteractDB.getFromDB("MaxPurpose")).iterator().next().toString());
 
         for (; maxPurpose > 0; maxPurpose--) {
             // Get the Sets of model numbers according to the group number.
-            String sqlRequestSwitchModelsByGroup = "select id_model from model where purpose = " + maxPurpose + ";";
-            Set<List> modelNumbers = getDB.selectExecute(sqlRequestSwitchModelsByGroup, 1);
+            Set<List> modelNumbers = InteractDB.getFromDB("SwitchModelsByGroup", maxPurpose.toString());
             // Put the Sets into the HashMap
             models.put(maxPurpose, modelNumbers);
         }
 
-
-    }
-
-    public static GetFromDB getFromDB() {
-        return getDB;
-    }
-
-    public static SNMPManager1 getSnmp() {
-        return snmp;
     }
 
     // Get the prepared prefix
@@ -52,7 +34,6 @@ public class ModelsTable {
 
     // Get the Group Number
     public static Integer getGroupNumber(Integer idModel) {
-
         for (Map.Entry<Integer, Set> entry : ModelsTable.models.entrySet()) {
             Set<List> set = entry.getValue();
             for(List list : set) {

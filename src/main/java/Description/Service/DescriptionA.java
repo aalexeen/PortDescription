@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author alex_jd
  */
-public abstract class DescriptionA implements Description, StatConPostDB  {
+public abstract class DescriptionA implements Description {
 
 
 }
