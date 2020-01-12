@@ -1,0 +1,2 @@
+This is working project that uses Telnet and SNMP protocols to change port descriptions on Huawei S9003 configuration
+according to DB of equipment and connections between them.
